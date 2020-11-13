@@ -17,11 +17,11 @@ function start-yarn {
 }
 function move-files { 
     hdfs dfs -put mapper.py /user/$USER/;
-    hdfs dfs -put reducer.py /user/$USER/;
+    hdfs dfs -put reducer_miniproj.py /user/$USER/reducer.py;
+    hdfs dfs -put reducer_miniproj.py /user/$USER/combiner.py; # combiner same code different filename
     hdfs dfs -put nltk.tgz /user/$USER/;
     hdfs dfs -put nltk_data.tgz /user/$USER/;
     hdfs dfs -put freqs.json /user/$USER/;
-    hdfs dfs -put english.txt /user/$USER/;
     hdfs dfs -put input /user/$USER/
 }
 function remove-files { 
@@ -36,7 +36,7 @@ function mapred {
     -input $JOB/input \
     -output $JOB/output \
     -mapper mapper.py \
-    -combiner reducer.py \
+    -combiner combiner.py \
     -reducer reducer.py
 }
 
