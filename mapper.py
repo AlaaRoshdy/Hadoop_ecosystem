@@ -3,20 +3,22 @@
 import sys
 import json
 import re
+import os
 
-sys.path.insert(0, 'nltk.zip')
+sys.path.insert(0, 'nltk')
 from nltk.tokenize import word_tokenize
-from nltk.stem.porter import PorterStemmer 
+from nltk.corpus import stopwords
+from nltk.stem.porter import PorterStemmer
+import nltk
 import math
 
-nltk.data.path.append("nltk_data") # Make NTLK look in the current path on folder nltk_data
+nltk.data.path.insert(0, "nltk_data") # Make NTLK look in the current path on folder nltk_data
 
 def read_vocabulary(file_path):
     with open(file_path) as file:
         return file.read().strip().split()
     
-stopwords_english = read_vocabulary("english.txt")    
-# stopwords_english = stopwords.words('english') # English stopwords
+stopwords_english = stopwords.words('english')
 stemmer = PorterStemmer() # stemmer object 
 
 with open("freqs.json", "r") as f:
