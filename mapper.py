@@ -33,8 +33,10 @@ for line in sys.stdin:
     # Converting line JSON to python dictionary
     line_dict = json.loads(line)
     # preprrocess test
-    body = re.sub(r'[^A-Za-z0-9 ]+', '', line_dict["body"]) # Remove non alphanumeric and non space characters
+    body = line_dict["body"]
+    body = body.lower() # lowercase
     body = re.sub(r'https?:\/\/.*[\r\n]*', '', body) # Remove links
+    body = re.sub(r'[^A-Za-z0-9 ]+', '', body) # Remove non alphanumeric and non space characters
     words = word_tokenize(body)
     subreddit_name = line_dict["subreddit"]
 
@@ -42,7 +44,7 @@ for line in sys.stdin:
 
     # Per word Operation
     for word in words:
-        if word not in stopwords_english: # skip stopwords
+        if word not in stopwords_english and not word.isnumeric(): # skip stopwords and all numbers words
             word_stem = stemmer.stem(word)
             # Word ( as topic ) count per Subreddit
             print(f"{subreddit_name}:topics", (word_stem, 1), sep='\t')
@@ -57,9 +59,9 @@ for line in sys.stdin:
             features[2] += word_freqs.get(f"{word_stem}:0", 0)
 
     # Comment sentiment / subreddit
-    sentiment = sigmoid(sum([f * th for f, th in zip(features, theta)]))
+    sentiment = int(sigmoid(sum([f * th for f, th in zip(features, theta)])) > 0.5)
     print(f"{subreddit_name}:sent", (sentiment,), sep="\t")
 
-    # Controversiality
-    print(f"{line_dict['parent_id']}:contr", ("count", 1), sep='\t')
-    print(f"{line_dict['id']}:contr", ("controversiality", line_dict["controversiality"]), sep='\t')
+    # # Controversiality
+    # print(f"{line_dict['parent_id']}:contr", ("count", 1), sep='\t')
+    # print(f"{line_dict['id']}:contr", ("controversiality", line_dict["controversiality"]), sep='\t')

@@ -31,13 +31,13 @@ function remove-files {
 function mapred { 
     JOB=$1;
     hadoop org.apache.hadoop.streaming.HadoopStreaming \
-    -files $JOB/mapper.py,$JOB/reducer.py,$JOB/freqs.json \
+    -files $JOB/mapper.py,$JOB/reducer.py,$JOB/combiner.py,$JOB/freqs.json \
     -archives $JOB/nltk.tgz#nltk,$JOB/nltk_data.tgz#nltk_data \
     -input $JOB/input \
     -output $JOB/output \
-    -mapper mapper.py \
-    -combiner combiner.py \
-    -reducer reducer.py
+    -reducer reducer.py \
+    -mapper mapper.py 
+    # -combiner combiner.py \
 }
 
 function nltk-deps {
