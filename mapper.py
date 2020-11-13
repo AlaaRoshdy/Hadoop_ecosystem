@@ -48,7 +48,7 @@ for line in sys.stdin:
             print(f"{subreddit_name}:topics", (word_stem, 1), sep='\t')
 
             # Word ( as topic ) with UpVotes
-            print(f"{word_stem}:upvotes", line_dict["ups"], sep='\t')
+            print(f"{word_stem}:upvotes", (line_dict["ups"],), sep='\t')
 
             # Word occurence in +ve examples default as 0
             features[1] += word_freqs.get(f"{word_stem}:1", 0)
@@ -58,7 +58,7 @@ for line in sys.stdin:
 
     # Comment sentiment / subreddit
     sentiment = sigmoid(sum([f * th for f, th in zip(features, theta)]))
-    print(f"{subreddit_name}:sent", sentiment, sep="\t")
+    print(f"{subreddit_name}:sent", (sentiment,), sep="\t")
 
     # Controversiality
     print(f"{line_dict['parent_id']}:contr", ("count", 1), sep='\t')
