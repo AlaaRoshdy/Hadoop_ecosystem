@@ -1,5 +1,5 @@
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-export HADOOP_HOME=/home/mmahrous/.local/hadoop-2.9.2
+export HADOOP_HOME=${HADOOP_HOME}
 export PATH=${JAVA_HOME}/bin:${HADOOP_HOME}/bin:${PATH}
 export HADOOP_CLASSPATH=${JAVA_HOME}/lib/tools.jar:${HADOOP_HOME}/share/hadoop/tools/lib/*
 
@@ -17,8 +17,8 @@ function start-yarn {
 }
 function move-files { 
     hdfs dfs -put mapper.py /user/$USER/;
-    hdfs dfs -put reducer_miniproj.py /user/$USER/reducer.py;
-    hdfs dfs -put reducer_miniproj.py /user/$USER/combiner.py; # combiner same code different filename
+    hdfs dfs -put reducer.py /user/$USER/reducer.py;
+    hdfs dfs -put reducer.py /user/$USER/combiner.py; # combiner same code different filename
     hdfs dfs -put nltk.tgz /user/$USER/;
     hdfs dfs -put nltk_data.tgz /user/$USER/;
     hdfs dfs -put freqs.json /user/$USER/;
