@@ -44,7 +44,8 @@ for line in sys.stdin:
 
     # Per word Operation
     for word in words:
-        if word not in stopwords_english and not word.isnumeric(): # skip stopwords and all numbers words
+        if word not in stopwords_english and not word.isnumeric() and len(word) <46: # skip stopwords and all numbers words
+
             word_stem = stemmer.stem(word)
             # Word ( as topic ) count per Subreddit
             print(f"{subreddit_name}:topics", (word_stem, 1), sep='\t')
