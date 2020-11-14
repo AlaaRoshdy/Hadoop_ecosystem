@@ -15,7 +15,8 @@ for line in sys.stdin:
     key, value = line.strip().split("\t")
     value = eval(value)
     
-    key, case = key.split(":")
+    *key, case = key.split(":")
+    key = ":".join(key) # handle the case where key has a :
     
     if case == "topics":
         if subreddit_name is None:

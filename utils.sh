@@ -18,7 +18,7 @@ function start-yarn {
 function move-files { 
     hdfs dfs -put mapper.py /user/$USER/;
     hdfs dfs -put reducer.py /user/$USER/reducer.py;
-    hdfs dfs -put reducer.py /user/$USER/combiner.py; # combiner same code different filename
+    # hdfs dfs -put reducer.py /user/$USER/combiner.py; # combiner same code different filename
     hdfs dfs -put nltk.tgz /user/$USER/;
     hdfs dfs -put nltk_data.tgz /user/$USER/;
     hdfs dfs -put freqs.json /user/$USER/;
@@ -31,7 +31,7 @@ function remove-files {
 function mapred { 
     JOB=$1;
     hadoop org.apache.hadoop.streaming.HadoopStreaming \
-    -files $JOB/mapper.py,$JOB/reducer.py,$JOB/combiner.py,$JOB/freqs.json \
+    -files $JOB/mapper.py,$JOB/reducer.py,$JOB/freqs.json \
     -archives $JOB/nltk.tgz#nltk,$JOB/nltk_data.tgz#nltk_data \
     -input $JOB/input \
     -output $JOB/output \
