@@ -5,15 +5,15 @@ export HADOOP_CLASSPATH=${JAVA_HOME}/lib/tools.jar:${HADOOP_HOME}/share/hadoop/t
 
 function start-hdfs { 
     hdfs namenode -format;
-    $HDHM/sbin/hadoop-daemon.sh --script hdfs start namenode;
-    $HDHM/sbin/hadoop-daemon.sh --script hdfs start datanode;
+    $HADOOP_HOME/sbin/hadoop-daemon.sh --script hdfs start namenode;
+    $HADOOP_HOME/sbin/hadoop-daemon.sh --script hdfs start datanode;
     hdfs dfs -mkdir /user;
     hdfs dfs -mkdir /user/$USER
 }
 
 function start-yarn { 
-    $HDHM/sbin/yarn-daemon.sh start nodemanager;
-    $HDHM/sbin/yarn-daemon.sh start resourcemanager
+    $HADOOP_HOME/sbin/yarn-daemon.sh start nodemanager;
+    $HADOOP_HOME/sbin/yarn-daemon.sh start resourcemanager
 }
 function move-files { 
     hdfs dfs -put mapper.py /user/$USER/;

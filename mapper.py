@@ -13,10 +13,6 @@ import nltk
 import math
 
 nltk.data.path.insert(0, "nltk_data") # Make NTLK look in the current path on folder nltk_data
-
-def read_vocabulary(file_path):
-    with open(file_path) as file:
-        return file.read().strip().split()
     
 stopwords_english = stopwords.words('english')
 stemmer = PorterStemmer() # stemmer object 

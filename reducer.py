@@ -7,7 +7,9 @@ import os
 is_reducer = os.path.basename(__file__) == 'reducer.py'
 
 upvotes_word = subreddit_name = sent_word = contr_word = None
-upvotes_count = sent_count = sent_sum = contr_count = word_count = 0
+upvotes_count = sent_count = sent_sum = word_count = 0
+contr_count = 0
+parent_controversiality = None
 topics_count = Counter()
 
 for line in sys.stdin:
@@ -52,13 +54,18 @@ for line in sys.stdin:
         sent_sum += value[0]
 
     # else:
-    #     if contr_word is None:
-    #         contr_word = key
-    #     elif contr_word != key:
-    #         print(f"{contr_word}:{case}", contr_count, sep='\t')
-    #         contr_word = key
-    #         contr_count = 0
-    #     contr_count += value[1]
+        # if contr_word is None:
+        #     contr_word = key
+        # elif contr_word != key:
+        #     if parent_controversiality: # not None. if None then parent does not exist
+        #         print(f"{contr_word}:{case}", contr_count, parent_controversiality, sep='\t')
+        #     contr_word = key
+        #     contr_count = 0
+        #     parent_controversiality = None
+        # if value[0] == "count":
+        #     contr_count += value[1]
+        # elif value[0] == "controversiality":
+        #     parent_controversiality = value[1]
         
 if case == "topics" and subreddit_name:
     print(f"{subreddit_name}:{case}", topics_count.most_common(5), sep='\t')
@@ -67,5 +74,5 @@ if case == "upvotes" and upvotes_word:
         print(f"{upvotes_word}:{case}", upvotes_count, sep='\t')
 if case == "sent" and sent_word:
     print(f"{sent_word}:{case}", sent_sum/sent_count, sep='\t')
-# if contr_word:
-#     print(f"{contr_word}:{case}", contr_count, sep='\t')
+# if contr_word and parent_controversiality:
+#     print(f"{contr_word}:{case}", contr_count, parent_controversiality, sep='\t')
